@@ -48,7 +48,6 @@ document.addEventListener('DOMContentLoaded', () => {
             window.remove();
         });
     });
-});
 
     // JavaScript実行環境の処理
     window.executeJS = function() {
@@ -108,6 +107,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // ウィンドウ表示のトグル
     window.toggleWindow = function(id) {
         const windowElement = document.getElementById(id);
-        windowElement.style.display = windowElement.style.display === 'none' ? 'block' : 'none';
+        if (windowElement) {
+            windowElement.style.display = windowElement.style.display === 'none' || windowElement.style.display === '' ? 'block' : 'none';
+        }
     };
 });
