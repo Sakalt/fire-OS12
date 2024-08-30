@@ -1,1 +1,159 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FireOS 12</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- サイドバー -->
+    <div id="sidebar">
+        <div class="widget">
+            <h3>タイマー</h3>
+            <div id="timer">00:00:00</div>
+        </div>
+        <div class="widget">
+            <h3>バッテリー</h3>
+            <div id="battery">75%</div>
+        </div>
+    </div>
 
+    <!-- ウィンドウコンテナ -->
+    <div id="window-container">
+        <!-- メモ -->
+        <div class="window" id="memo-window">
+            <div class="window-header">
+                <span class="window-title">メモ</span>
+                <div class="window-controls">
+                    <button class="minimize">−</button>
+                    <button class="maximize">□</button>
+                    <button class="close">×</button>
+                </div>
+            </div>
+            <div class="window-content">
+                <textarea></textarea>
+            </div>
+        </div>
+
+        <!-- ターミナル -->
+        <div class="window" id="terminal-window">
+            <div class="window-header">
+                <span class="window-title">ターミナル</span>
+                <div class="window-controls">
+                    <button class="minimize">−</button>
+                    <button class="maximize">□</button>
+                    <button class="close">×</button>
+                </div>
+            </div>
+            <div class="window-content">
+                <textarea id="terminal-input" rows="10" placeholder="コマンドを入力..."></textarea>
+                <button onclick="runCommand()">実行</button>
+                <pre id="terminal-output"></pre>
+            </div>
+        </div>
+
+        <!-- JavaScript 実行環境 -->
+        <div class="window" id="js-exec-window">
+            <div class="window-header">
+                <span class="window-title">JavaScript 実行環境</span>
+                <div class="window-controls">
+                    <button class="minimize">−</button>
+                    <button class="maximize">□</button>
+                    <button class="close">×</button>
+                </div>
+            </div>
+            <div class="window-content">
+                <textarea id="js-input" rows="10" placeholder="JavaScriptコードを入力..."></textarea>
+                <button onclick="executeJS()">実行</button>
+                <pre id="js-output"></pre>
+            </div>
+        </div>
+
+        <!-- ブラウザ -->
+        <div class="window" id="browser-window">
+            <div class="window-header">
+                <span class="window-title">ブラウザ</span>
+                <div class="window-controls">
+                    <button class="minimize">−</button>
+                    <button class="maximize">□</button>
+                    <button class="close">×</button>
+                </div>
+            </div>
+            <div class="window-content">
+                <input type="text" id="browser-search" placeholder="Bing検索...">
+                <button onclick="searchBing()">検索</button>
+                <iframe id="browser-iframe" src="" frameborder="0"></iframe>
+            </div>
+        </div>
+
+        <!-- 電卓 -->
+        <div class="window" id="calculator-window">
+            <div class="window-header">
+                <span class="window-title">電卓</span>
+                <div class="window-controls">
+                    <button class="minimize">−</button>
+                    <button class="maximize">□</button>
+                    <button class="close">×</button>
+                </div>
+            </div>
+            <div class="window-content">
+                <input type="text" id="calc-input" readonly>
+                <div id="calc-buttons">
+                    <!-- 電卓のボタン配置 -->
+                    <button onclick="pressCalcButton('1')">1</button>
+                    <button onclick="pressCalcButton('2')">2</button>
+                    <button onclick="pressCalcButton('3')">3</button>
+                    <button onclick="pressCalcButton('+')">+</button>
+                    <br>
+                    <button onclick="pressCalcButton('4')">4</button>
+                    <button onclick="pressCalcButton('5')">5</button>
+                    <button onclick="pressCalcButton('6')">6</button>
+                    <button onclick="pressCalcButton('-')">-</button>
+                    <br>
+                    <button onclick="pressCalcButton('7')">7</button>
+                    <button onclick="pressCalcButton('8')">8</button>
+                    <button onclick="pressCalcButton('9')">9</button>
+                    <button onclick="pressCalcButton('*')">*</button>
+                    <br>
+                    <button onclick="pressCalcButton('0')">0</button>
+                    <button onclick="pressCalcButton('.')">.</button>
+                    <button onclick="pressCalcButton('=')">=</button>
+                    <button onclick="pressCalcButton('/')">/</button>
+                    <br>
+                    <button onclick="clearCalc()">C</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ワードプロセッサ -->
+        <div class="window" id="word-window">
+            <div class="window-header">
+                <span class="window-title">ワードプロセッサ</span>
+                <div class="window-controls">
+                    <button class="minimize">−</button>
+                    <button class="maximize">□</button>
+                    <button class="close">×</button>
+                </div>
+            </div>
+            <div class="window-content">
+                <div contenteditable="true" id="word-editor" style="border: 1px solid #ccc; padding: 10px; min-height: 200px;">
+                    ここにテキストを入力...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- クイックメニュー -->
+    <div id="quick-menu">
+        <button onclick="toggleWindow('memo-window')">メモ</button>
+        <button onclick="toggleWindow('terminal-window')">ターミナル</button>
+        <button onclick="toggleWindow('js-exec-window')">JS 実行環境</button>
+        <button onclick="toggleWindow('browser-window')">ブラウザ</button>
+        <button onclick="toggleWindow('calculator-window')">電卓</button>
+        <button onclick="toggleWindow('word-window')">ワード</button>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
