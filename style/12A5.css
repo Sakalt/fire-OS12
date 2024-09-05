@@ -1,7 +1,7 @@
 /* 基本スタイル */
 body {
     font-family: Arial, sans-serif;
-    background-url: ('https://sakalt.github.io/Wallpapers/04.jpg');
+    background: url("https://sakalt.github.io/Wallpapers/04.jpg") center/cover no-repeat;
     color: #ffffff;
     margin: 0;
     padding: 0;
