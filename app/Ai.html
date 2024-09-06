@@ -69,7 +69,7 @@
     async function loadModel() {
       try {
         appendMessage('システム', 'モデルをロード中...');
-        model = await window.transformers.load('Xenova/gpt2-small');
+        model = await window.transformers.load('gpt2');  // 正しいモデル名を指定
         appendMessage('システム', 'モデルのロード完了');
       } catch (error) {
         appendMessage('エラー', 'モデルのロードに失敗しました。もう一度試してください。');
