@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GPT-2 Chat Bot</title>
+  <title>BERT Chat Bot</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -56,21 +56,21 @@
     <button id="send-btn">送信</button>
   </div>
 
-  <!-- Transformers.jsのCDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
   <script src="https://cdn.jsdelivr.net/npm/@xenova/transformers@2.6.2/dist/transformers.min.js"></script>
   <script>
     const chatOutput = document.getElementById('chat-output');
     const userInput = document.getElementById('user-input');
     const sendButton = document.getElementById('send-btn');
-
-    let classifier;
+    
+    let model;
 
     // モデルをロードする関数
     async function loadModel() {
       try {
         appendMessage('システム', 'モデルをロード中...');
-        // 正しいパイプラインの設定
-        classifier = await transformers.pipeline('text-generation', 'saldra/rinna-japanese-gpt2-xsmall-onnx');
+        // 日本語BERTモデルのURLを指定
+        model = await window.transformers.pipeline('text-classification', 'cl-tohoku/bert-base-japanese');
         appendMessage('システム', 'モデルのロード完了');
       } catch (error) {
         appendMessage('エラー', 'モデルのロードに失敗しました。もう一度試してください。');
@@ -81,18 +81,18 @@
     // メッセージを送信する関数
     async function sendMessage() {
       const inputText = userInput.value.trim();
-      if (inputText !== '' && classifier) {
+      if (inputText !== '' && model) {
         appendMessage('ユーザー', inputText);
         try {
-          // モデルにテキストを入力して出力を取得
-          const result = await classifier(inputText);
-          appendMessage('ボット', result[0].generated_text);
+          // モデルにテキストを入力して予測を実行
+          const result = await model(inputText);
+          appendMessage('ボット', JSON.stringify(result));
         } catch (error) {
           appendMessage('エラー', 'メッセージの生成に失敗しました。');
           console.error(error);
         }
         userInput.value = '';
-      } else if (!classifier) {
+      } else if (!model) {
         appendMessage('エラー', 'モデルがロードされていません。');
       } else {
         appendMessage('エラー', '入力が空です。');
