@@ -56,20 +56,20 @@
     <button id="send-btn">送信</button>
   </div>
 
-  <!-- Hugging Face Transformers.jsのCDN -->
-  <script src="https://cdn.jsdelivr.net/npm/@xenova/transformers@2.2.0/dist/transformers.min.js"></script>
+  <!-- Transformers.jsのCDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@xenova/transformers@2.6.2/dist/transformers.min.js"></script>
   <script>
     const chatOutput = document.getElementById('chat-output');
     const userInput = document.getElementById('user-input');
     const sendButton = document.getElementById('send-btn');
 
-    let model;
+    let classifier;
 
     // モデルをロードする関数
     async function loadModel() {
       try {
         appendMessage('システム', 'モデルをロード中...');
-        model = await window.transformers.load('gpt2');  // 正しいモデル名を指定
+        classifier = await window.transformers.pipeline('text-generation', 'saldra/rinna-japanese-gpt2-xsmall-onnx');
         appendMessage('システム', 'モデルのロード完了');
       } catch (error) {
         appendMessage('エラー', 'モデルのロードに失敗しました。もう一度試してください。');
@@ -80,21 +80,18 @@
     // メッセージを送信する関数
     async function sendMessage() {
       const inputText = userInput.value.trim();
-      if (inputText !== '' && model) {
+      if (inputText !== '' && classifier) {
         appendMessage('ユーザー', inputText);
         try {
           // モデルにテキストを入力して出力を取得
-          const output = await model.generate(inputText, {
-            max_new_tokens: 50,
-            temperature: 0.7
-          });
-          appendMessage('ボット', output.generated_text);
+          const result = await classifier(inputText);
+          appendMessage('ボット', result[0].generated_text);
         } catch (error) {
           appendMessage('エラー', 'メッセージの生成に失敗しました。');
           console.error(error);
         }
         userInput.value = '';
-      } else if (!model) {
+      } else if (!classifier) {
         appendMessage('エラー', 'モデルがロードされていません。');
       } else {
         appendMessage('エラー', '入力が空です。');
