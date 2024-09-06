@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GPT-2 チャット</title>
+  <title>GPT-2 Chat Bot</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -59,50 +59,62 @@
   <!-- Hugging Face Transformers.jsのCDN -->
   <script src="https://cdn.jsdelivr.net/npm/@xenova/transformers@2.2.0/dist/transformers.min.js"></script>
   <script>
-    // Chat Botの初期化
     const chatOutput = document.getElementById('chat-output');
     const userInput = document.getElementById('user-input');
     const sendButton = document.getElementById('send-btn');
 
-    // GPT-2モデルをロード
+    let model;
+
+    // モデルをロードする関数
     async function loadModel() {
-      console.log('モデルをロード中...');
-      const model = await window.transformers.load('Xenova/gpt2-small');
-      console.log('モデルのロード完了');
-      return model;
+      try {
+        appendMessage('システム', 'モデルをロード中...');
+        model = await window.transformers.load('Xenova/gpt2-small');
+        appendMessage('システム', 'モデルのロード完了');
+      } catch (error) {
+        appendMessage('エラー', 'モデルのロードに失敗しました。もう一度試してください。');
+        console.error(error);
+      }
     }
 
-    // モデルを変数に保存
-    let model;
-    loadModel().then(loadedModel => {
-      model = loadedModel;
-    });
-
-    // メッセージ送信処理
-    sendButton.addEventListener('click', async () => {
+    // メッセージを送信する関数
+    async function sendMessage() {
       const inputText = userInput.value.trim();
       if (inputText !== '' && model) {
         appendMessage('ユーザー', inputText);
-
-        // GPT-2モデルに入力テキストを渡して出力を生成
-        const output = await model.generate(inputText, {
-          max_new_tokens: 50,  // 出力の最大トークン数
-          temperature: 0.7     // 生成のランダム性
-        });
-
-        const response = output.generated_text;
-        appendMessage('ボット', response);
+        try {
+          // モデルにテキストを入力して出力を取得
+          const output = await model.generate(inputText, {
+            max_new_tokens: 50,
+            temperature: 0.7
+          });
+          appendMessage('ボット', output.generated_text);
+        } catch (error) {
+          appendMessage('エラー', 'メッセージの生成に失敗しました。');
+          console.error(error);
+        }
         userInput.value = '';
+      } else if (!model) {
+        appendMessage('エラー', 'モデルがロードされていません。');
+      } else {
+        appendMessage('エラー', '入力が空です。');
       }
-    });
+    }
 
-    // チャットメッセージを表示する関数
+    // メッセージを表示する関数
     function appendMessage(sender, message) {
       const newMessage = document.createElement('div');
       newMessage.className = `message ${sender.toLowerCase()}`;
       newMessage.textContent = `${sender}: ${message}`;
       chatOutput.appendChild(newMessage);
+      chatOutput.scrollTop = chatOutput.scrollHeight; // スクロールを最下部に
     }
+
+    // イベントリスナーを設定
+    sendButton.addEventListener('click', sendMessage);
+
+    // ページ読み込み時にモデルをロード
+    window.onload = loadModel;
   </script>
 </body>
 </html>
