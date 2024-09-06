@@ -1,0 +1,170 @@
+/* 基本スタイル */
+body {
+    font-family: Arial, sans-serif;
+    background: url("https://sakalt.github.io/Wallpapers/04.jpg") center/cover no-repeat;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+}
+
+/* サイドバーのスタイル */
+#sidebar {
+    background: rgba(200, 20, 0, 0.6);
+    width: 200px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.widget {
+    background-color: #cc0000;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    padding: 10px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#timer, #battery {
+    font-size: 1.5em;
+    margin-top: 5px;
+}
+
+/* ウィンドウのスタイル */
+.window {
+    width: 400px;
+    height: 300px;
+    background-color: rgba(200, 17, 0, 0.4);
+    color: #000;
+    position: absolute;
+    top: 50px;
+    left: 250px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    display: none;
+    flex-direction: column;
+}
+
+.window-header {
+    background-color: rgba(240, 0, 0, 0.55);
+    color: #fff;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: move;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.window-title {
+    font-size: 1em;
+    margin-left: 10px;
+}
+
+.window-controls button {
+    background-color: linear-gradient(270deg, #a41100, #a20100, #a41100);
+    color: white;
+    border: none;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    font-weight: bold;
+    margin-left: 2px;
+    border-radius: 4px;
+}
+
+.window-controls button:hover {
+    background-color: linear-gradient(270deg, #a41100, #a20100, #a41100);
+    box-shadow: 0 4px 8px rgba(200, 17, 0, 0.5);
+}
+
+.window-content {
+    padding: 10px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    overflow: auto;
+}
+
+/* テキストエリアや入力ボックスのスタイル */
+textarea, input[type="text"] {
+    width: calc(100% - 30px);
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+/* 電卓のボタンスタイル */
+#calc-buttons button {
+    width: 50px;
+    height: 50px;
+    margin: 5px;
+    font-size: 1.2em;
+    background-color: #aaaaaa;
+    color: #101010;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#calc-buttons button:hover {
+    background-color: #acacac;
+    border: 1px solid #ccc;
+}
+
+/* クイックメニューのスタイル */
+#quick-menu {
+    position: fixed;
+    bottom: 10px;
+    left: 220px;
+    background-color: linear-gradient(270deg, #a41100, #a20100);
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.238);
+}
+
+#quick-menu button {
+    background-color: #ff0000;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin-right: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.2s;
+}
+
+#quick-menu button:hover {
+    background-color: #e30000;
+    box-shadow: 0 4px 8px rgba(239, 0, 0, 0.4);
+}
+
+/* ドラッグ機能 */
+.window[draggable="true"] {
+    cursor: move;
+}
+
+/* ウィンドウのアニメーション */
+@keyframes fadeIn {
+    0% { opacity: 0; transform: scale(0.1); }
+    50% { opacity: 0.5; transform: scale(0.5); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+.window {
+    animation: fadeIn 0.5s ease-out;
+}
