@@ -70,7 +70,7 @@
       try {
         appendMessage('システム', 'モデルをロード中...');
         // 正しいパイプラインの設定
-        classifier = await transformers.pipeline('text-generation', 'rinna/japanese-gpt2-medium');
+        classifier = await transformers.pipeline('text-generation', 'saldra/rinna-japanese-gpt2-xsmall-onnx');
         appendMessage('システム', 'モデルのロード完了');
       } catch (error) {
         appendMessage('エラー', 'モデルのロードに失敗しました。もう一度試してください。');
