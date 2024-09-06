@@ -69,7 +69,7 @@ body {
     margin-left: 10px;
 }
 
-.window-controls button {
+#window-controls button {
     background-color: linear-gradient(270deg, #a41100, #a20100, #a41100);
     color: white;
     border: none;
@@ -81,7 +81,7 @@ body {
     border-radius: 4px;
 }
 
-.window-controls button:hover {
+#window-controls button:hover {
     background-color: linear-gradient(270deg, #a41100, #a20100, #a41100);
     box-shadow: 0 4px 8px rgba(200, 17, 0, 0.5);
 }
@@ -150,7 +150,7 @@ textarea, input[type="text"] {
 
 #quick-menu button:hover {
     background-color: #e30000;
-    box-shadow: 0 4px 8px rgba(239, 0, 0, 0.4);
+    box-shadow: 0 4px 8px rgba(239, 0, 0, 0.19);
 }
 
 /* ドラッグ機能 */
