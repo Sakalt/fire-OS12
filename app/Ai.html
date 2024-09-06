@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GPT-2 Chat Bot</title>
+  <title>GPT-4o Chat Bot</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -70,7 +70,7 @@
       try {
         appendMessage('システム', 'モデルをロード中...');
         // モデル名が正しいか確認し、適切なモデルを指定します
-        classifier = await window.transformers.pipeline('text-generation', 'rinna/japanese-gpt2-medium');
+        classifier = await window.transformers.pipeline('text-generation', 'Xenova/gpt-4o');
         appendMessage('システム', 'モデルのロード完了');
       } catch (error) {
         appendMessage('エラー', 'モデルのロードに失敗しました。もう一度試してください。');
