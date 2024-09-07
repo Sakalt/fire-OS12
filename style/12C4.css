@@ -70,7 +70,7 @@ body {
 }
 
 .window-controls button {
-    background-color: linear-gradient(to right, #a41100, #a20100, #a43200);
+    background-color: linear-gradient(180deg, #a41100, #a20100, #a43200);
     color: white;
     border: none;
     cursor: pointer;
@@ -82,7 +82,7 @@ body {
 }
 
 .window-controls button:hover {
-    background-color: linear-gradient(to right, #a41100, #a20100, #a43200);
+    background-color: linear-gradient(180deg, #a41100, #a20100, #a43200);
     box-shadow: 0 4px 8px rgba(200, 17, 0, 0.5);
 }
 
