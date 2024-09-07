@@ -130,7 +130,7 @@ textarea, input[type="text"] {
     position: fixed;
     bottom: 10px;
     left: 220px;
-    background-color: linear-gradient(270deg, #a41100, #a20100);
+    background-color: linear-gradient(180deg, #a41100, #a20100);
     border-radius: 8px;
     padding: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.238);
