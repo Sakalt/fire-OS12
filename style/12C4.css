@@ -70,7 +70,7 @@ body {
 }
 
 .window-controls button {
-    background-color: linear-gradient(180deg, #a41100, #a20100, #a43200);
+    background: linear-gradient(180deg, #a41100, #a20100, #a43200);
     color: white;
     border: none;
     cursor: pointer;
@@ -82,7 +82,7 @@ body {
 }
 
 .window-controls button:hover {
-    background-color: linear-gradient(180deg, #a41100, #a20100, #a43200);
+    background: linear-gradient(180deg, #a41100, #a20100, #a43200);
     box-shadow: 0 4px 8px rgba(200, 17, 0, 0.5);
 }
 
@@ -130,7 +130,7 @@ textarea, input[type="text"] {
     position: fixed;
     bottom: 10px;
     left: 220px;
-    background-color: linear-gradient(180deg, #a42700, #c42710, #e43000);
+    background: linear-gradient(180deg, #a42700, #c42710, #e43000);
     padding: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.238);
 }
