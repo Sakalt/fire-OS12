@@ -36,9 +36,16 @@
             padding: 10px;
             font-size: 16px;
         }
+        .loading {
+            text-align: center;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-bottom: 1px solid #ccc;
+        }
     </style>
 </head>
 <body>
+    <div class="loading" id="loadingMessage">モデルをロード中...</div>
     <div class="chat-container" id="chatContainer">
         <!-- チャット履歴がここに表示されます -->
     </div>
@@ -51,8 +58,14 @@
     <script>
         // BERTモデルを読み込む関数
         async function loadModel() {
-            const model = await tf.loadGraphModel('https://tfhub.dev/google/bert_uncased_L-12_H-768_A-12/1');
-            return model;
+            try {
+                const model = await tf.loadGraphModel('https://tfhub.dev/google/bert_uncased_L-12_H-768_A-12/1');
+                document.getElementById('loadingMessage').textContent = 'モデルが準備完了しました！';
+                return model;
+            } catch (error) {
+                document.getElementById('loadingMessage').textContent = 'モデルのロードに失敗しました。';
+                console.error('モデルのロードエラー:', error);
+            }
         }
 
         // モデルを読み込んでグローバル変数に格納
