@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BERTチャットアプリ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+            border-bottom: 1px solid #ccc;
+        }
+        .chat-input {
+            display: flex;
+            border-top: 1px solid #ccc;
+            padding: 10px;
+        }
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            font-size: 16px;
+        }
+        .chat-input button {
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container" id="chatContainer">
+        <!-- チャット履歴がここに表示されます -->
+    </div>
+    <div class="chat-input">
+        <input type="text" id="userInput" placeholder="メッセージを入力...">
+        <button onclick="sendMessage()">送信</button>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/bert"></script>
+    <script>
+        // BERTモデルを読み込む関数
+        async function loadModel() {
+            const model = await tf.loadGraphModel('https://tfhub.dev/google/bert_uncased_L-12_H-768_A-12/1');
+            return model;
+        }
+
+        // モデルを読み込んでグローバル変数に格納
+        let model;
+        loadModel().then(loadedModel => {
+            model = loadedModel;
+        });
+
+        // ユーザーからのメッセージを処理する関数
+        async function processMessage(text) {
+            if (!model) {
+                return "モデルがまだロードされていません。";
+            }
+
+            // テキストをBERTモデルに適した形式に変換
+            const input = tf.tensor([text]);
+            const predictions = await model.predict(input);
+            return predictions;
+        }
+
+        // メッセージを送信する関数
+        async function sendMessage() {
+            const inputField = document.getElementById('userInput');
+            const message = inputField.value;
+            if (!message) return;
+
+            // チャット履歴にユーザーのメッセージを追加
+            const chatContainer = document.getElementById('chatContainer');
+            chatContainer.innerHTML += `<div><strong>ユーザー:</strong> ${message}</div>`;
+
+            // メッセージをモデルで処理
+            const response = await processMessage(message);
+
+            // チャット履歴にモデルからの応答を追加
+            chatContainer.innerHTML += `<div><strong>システム:</strong> ${response}</div>`;
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+
+            // 入力フィールドをクリア
+            inputField.value = '';
+        }
+    </script>
+</body>
+</html>
